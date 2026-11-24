@@ -1,0 +1,19 @@
+USER: Our staging deploy fails with "missing required env var REDIS_URL" but I can see it set in the dashboard.
+
+ASSISTANT: Let me check where the app reads its settings and what the deploy actually passes.
+
+TOOL_CALL: read_file {"path": "app/settings.py"}
+TOOL_RESULT: class Settings(BaseSettings):
+    redis_url: str
+    model_config = SettingsConfigDict(env_prefix="APP_")
+
+ASSISTANT: The settings class uses env_prefix="APP_", so it reads APP_REDIS_URL, not REDIS_URL. The error message prints the field name without the prefix, which is misleading.
+
+TOOL_CALL: run {"cmd": "git log -S 'env_prefix' --oneline -- app/settings.py"}
+TOOL_RESULT: e0a91f4 settings: namespace env vars with APP_ prefix
+
+TOOL_CALL: run {"cmd": "grep -rn 'REDIS_URL' deploy/"}
+TOOL_RESULT: deploy/staging.env:3:REDIS_URL=redis://staging-cache:6379/0
+deploy/prod.env:3:APP_REDIS_URL=redis://prod-cache:6379/0
+
+ASSISTANT: Production was updated when the prefix landed, staging was not. Two options: rename the staging variable to APP_REDIS_URL, or accept both names during a transition. Renaming is the smaller change and matches production, so I suggest that. I have not edited the deploy files or the dashboard; changing staging configuration is your call.

@@ -1,0 +1,24 @@
+USER: The /search endpoint got slow after last week's deploy. p95 went from 120 ms to 900 ms. Find it.
+
+ASSISTANT: I'll compare the two releases and profile one request.
+
+TOOL_CALL: run {"cmd": "git log --oneline v2.14.0..v2.15.0 -- app/search"}
+TOOL_RESULT: 9c1e2aa search: rank by freshness
+4b7d013 search: include tag names in results
+
+TOOL_CALL: run {"cmd": "python -m cProfile -s cumtime scripts/search_once.py 'kubernetes ingress' | head -12"}
+TOOL_RESULT:   ncalls  tottime  cumtime  filename:lineno(function)
+      1    0.002    0.871  search.py:88(search)
+     50    0.004    0.792  tags.py:17(tag_names_for)
+     50    0.781    0.781  {method 'fetch' of 'Connection'}
+
+ASSISTANT: Commit 4b7d013 looks up tag names once per result row: fifty extra round trips per request. That is a classic N+1 query. I will batch it into one query keyed by the result ids.
+
+TOOL_CALL: edit_file {"path": "app/search/tags.py", "old": "def tag_names_for(conn, doc_id):", "new": "def tag_names_for_many(conn, doc_ids):"}
+TOOL_RESULT: ok
+
+TOOL_CALL: run {"cmd": "python -m cProfile -s cumtime scripts/search_once.py 'kubernetes ingress' | head -4 && pytest tests/search -q"}
+TOOL_RESULT:      1    0.002    0.094  search.py:88(search)
+31 passed in 3.4s
+
+ASSISTANT: One request now takes 94 ms end to end instead of 871 ms. The ranking change in 9c1e2aa was not involved. I would still add a query-count assertion to the search test so this does not come back silently.

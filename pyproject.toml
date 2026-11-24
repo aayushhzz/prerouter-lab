@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prerouter-lab"
+version = "0.1.0"
+description = "Edge0-style trained routing prediction for SSD-streamed MoE experts, measured on a small MLX MoE"
+requires-python = ">=3.9"
+dependencies = ["numpy", "mlx-lm"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+pr = "prerouter_lab.cli:main"
+
+[tool.setuptools]
+packages = ["prerouter_lab"]
+
+[tool.setuptools.package-data]
+prerouter_lab = ["corpus/*.txt"]
