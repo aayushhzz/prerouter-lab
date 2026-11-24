@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-label="prerouter-lab — Edge0-Style Trained Routing Prediction for SSD-Streamed MoE Experts">
+  <defs>
+    <linearGradient id="bg-pr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1021"/>
+      <stop offset="55%" stop-color="#111631"/>
+      <stop offset="100%" stop-color="#191638"/>
+    </linearGradient>
+    <linearGradient id="accent-pr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="glow-pr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
+    </linearGradient>
+    <pattern id="grid-pr" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#94a3b8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect x="8" y="8" width="1184" height="304" rx="22" fill="url(#bg-pr)" stroke="#1e294b" stroke-width="2"/>
+  <rect x="8" y="8" width="1184" height="304" rx="22" fill="url(#grid-pr)"/>
+  <ellipse cx="215" cy="160" rx="195" ry="125" fill="url(#glow-pr)"/>
+
+  <!-- Emblem: MoE layer L -> layer L+1 routing prediction + SSD stream -->
+  <g transform="translate(92, 68)">
+    <rect x="0" y="0" width="184" height="184" rx="28" fill="#131936" stroke="#2c3566" stroke-width="2"/>
+    <!-- Left column: Layer L nodes -->
+    <circle cx="46" cy="48" r="10" fill="#1e293b" stroke="#818cf8" stroke-width="3"/>
+    <circle cx="46" cy="84" r="10" fill="#818cf8"/>
+    <circle cx="46" cy="120" r="10" fill="#1e293b" stroke="#818cf8" stroke-width="3"/>
+
+    <!-- Right column: Layer L+1 predicted top-k experts -->
+    <rect x="122" y="36" width="24" height="22" rx="5" fill="#38bdf8"/>
+    <rect x="122" y="72" width="24" height="22" rx="5" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <rect x="122" y="108" width="24" height="22" rx="5" fill="#38bdf8"/>
+
+    <!-- Prediction arcs -->
+    <path d="M 56 84 C 84 84, 92 47, 120 47" fill="none" stroke="url(#accent-pr)" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M 56 84 C 84 84, 92 119, 120 119" fill="none" stroke="url(#accent-pr)" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M 56 48 C 82 48, 92 83, 120 83" fill="none" stroke="#64748b" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="4 4"/>
+
+    <!-- Bottom pill -->
+    <rect x="30" y="142" width="124" height="22" rx="11" fill="#0b1021" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1.5"/>
+    <text x="92" y="157" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="600" fill="#7dd3fc">L(t) -&gt; L+1(t+1)</text>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(320, 114)">
+    <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="-1.5" fill="#f8fafc">prerouter-lab</text>
+    <text x="2" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="400" fill="#94a3b8">Edge0-style trained routing prediction for SSD-streamed MoE experts</text>
+
+    <!-- Feature pills -->
+    <g transform="translate(0, 74)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="600">
+      <rect x="0" y="0" width="154" height="32" rx="16" fill="#1e1b4b" stroke="#818cf8" stroke-opacity="0.55"/>
+      <text x="77" y="21" text-anchor="middle" fill="#c7d2fe">MLX OLMoE</text>
+
+      <rect x="168" y="0" width="188" height="32" rx="16" fill="#0c263b" stroke="#38bdf8" stroke-opacity="0.55"/>
+      <text x="262" y="21" text-anchor="middle" fill="#7dd3fc">F_NOCACHE SSD</text>
+
+      <rect x="370" y="0" width="198" height="32" rx="16" fill="#172038" stroke="#64748b" stroke-opacity="0.5"/>
+      <text x="469" y="21" text-anchor="middle" fill="#cbd5e1">arXiv:2609.18063</text>
+    </g>
+  </g>
+
+  <!-- Right pipeline readout -->
+  <g transform="translate(1038, 70)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+    <text x="0" y="0" fill="#64748b">PIPELINE</text>
+    <rect x="0" y="14" width="108" height="22" rx="6" fill="#171e3d" stroke="#818cf8" stroke-opacity="0.45"/>
+    <text x="12" y="29" fill="#c7d2fe">pr capture</text>
+    <rect x="0" y="42" width="108" height="22" rx="6" fill="#171e3d" stroke="#818cf8" stroke-opacity="0.55"/>
+    <text x="12" y="57" fill="#c7d2fe">pr train</text>
+    <rect x="0" y="70" width="108" height="22" rx="6" fill="#132542" stroke="#38bdf8" stroke-opacity="0.55"/>
+    <text x="12" y="85" fill="#7dd3fc">pr sim</text>
+    <rect x="0" y="98" width="108" height="22" rx="6" fill="#132542" stroke="#38bdf8" stroke-opacity="0.55"/>
+    <text x="12" y="113" fill="#7dd3fc">pr ppl</text>
+    <rect x="0" y="126" width="108" height="22" rx="6" fill="#132542" stroke="#38bdf8" stroke-opacity="0.75"/>
+    <text x="12" y="141" fill="#bae6fd">pr report</text>
+  </g>
+</svg>
